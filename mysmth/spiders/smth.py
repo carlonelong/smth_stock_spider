@@ -4,6 +4,7 @@ from datetime import datetime
 from util import csv 
 import jieba
 import re 
+import json 
 
 account = ''
 password = ''
@@ -70,8 +71,14 @@ class SmthSpider(scrapy.Spider):
         csv.write(self.log_file, ["title", "author", "time"])
 
     def after_login(self, response):
+        if response.status != 200:
+            print("invalid status: {}".format(response.status))
+            return
+        msg = json.loads(response.text)
+        if msg["ajax_st"] != 1:
+            print("invalid response: {}".format(msg["ajax_msg"]))
+            return
         for url in self.start_urls:
-            # print("request url {url}".format(url=url))
             yield scrapy.Request(url=url, callback=self.parse)
 
 
