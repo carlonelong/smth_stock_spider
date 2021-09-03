@@ -13,7 +13,7 @@ class SmthSpider(scrapy.Spider):
     name = 'smth'
     url_prefix = "https://mysmth.net"
     allowed_domains = ['www.mysmth.net']
-    start_urls = ['https://www.mysmth.net/nForum/board/Stock?p={}'.format(i) for i in range(1, 11)]
+    start_urls = ['https://www.mysmth.net/nForum/board/Stock?p={}'.format(i) for i in range(1, 6)]
     login_url = 'https://www.mysmth.net/nForum/user/ajax_login.json'
     log_file = "./log/{}".format(datetime.now().strftime("%Y-%m-%d-%H:%M:%S"))
     all_stocks = [line.strip() for line in open("data/stocks.txt", "r")]
